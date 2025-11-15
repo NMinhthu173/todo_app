@@ -25,37 +25,80 @@ header('Location: dashboard.php'); exit();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-<title>Chỉnh sửa công việc</title>
-<link rel="stylesheet" href="css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa công việc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f0f2f5;
+        }
+        .task-card {
+            max-width: 650px;
+            margin: 50px auto;
+            border-radius: 12px;
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+        }
+        .btn-custom {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        h2 {
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body class="container mt-5">
-<h2>Chỉnh sửa công việc</h2>
-<?php if(isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
-<form method="post">
-<div class="mb-3">
-<label>Tiêu đề</label>
-<input type="text" name="title" class="form-control" value="<?= htmlspecialchars($task['title']) ?>" required>
-</div>
-<div class="mb-3">
-<label>Mô tả</label>
-<textarea name="description" class="form-control"><?= htmlspecialchars($task['description']) ?></textarea>
-</div>
-<div class="mb-3">
-<label>Ngày hết hạn</label>
-<input type="date" name="due_date" class="form-control" value="<?= $task['due_date'] ?>">
-</div>
-<div class="mb-3">
-<label>Trạng thái</label>
-<select name="status" class="form-select">
-<option value="pending" <?= $task['status']=='pending'?'selected':'' ?>>Chờ xử lý</option>
-<option value="in_progress" <?= $task['status']=='in_progress'?'selected':'' ?>>Đang thực hiện</option>
-<option value="completed" <?= $task['status']=='completed'?'selected':'' ?>>Hoàn thành</option>
-</select>
-</div>
-<button class="btn btn-primary">Cập nhật</button>
-<a href="dashboard.php" class="btn btn-secondary">Quay lại</a>
-</form>
+
+<body>
+    <div class="task-card">
+        <h2 class="text-center mb-4">✏️ Chỉnh sửa công việc</h2>
+
+        <?php if(isset($error)): ?>
+            <div class="alert alert-danger text-center"><?= $error ?></div>
+        <?php endif; ?>
+
+        <form method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
+                <input type="text" name="title" 
+                       class="form-control form-control-lg" 
+                       value="<?= htmlspecialchars($task['title']) ?>" 
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea name="description" 
+                          class="form-control" 
+                          rows="3"><?= htmlspecialchars($task['description']) ?></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ngày hết hạn</label>
+                <input type="date" name="due_date" 
+                       class="form-control" 
+                       value="<?= $task['due_date'] ?>">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Trạng thái</label>
+                <select name="status" class="form-select">
+                    <option value="pending"      <?= $task['status']=='pending'?'selected':'' ?>>Chờ xử lý</option>
+                    <option value="in_progress" <?= $task['status']=='in_progress'?'selected':'' ?>>Đang thực hiện</option>
+                    <option value="completed"   <?= $task['status']=='completed'?'selected':'' ?>>Hoàn thành</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary btn-custom mb-2">💾 Cập nhật</button>
+            <a href="dashboard.php" class="btn btn-secondary btn-custom">⬅ Quay lại</a>
+
+        </form>
+    </div>
 </body>
 </html>
